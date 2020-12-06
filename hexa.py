@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # version stuff
 major = '1'
 minor = '6'
