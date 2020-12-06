@@ -100,8 +100,24 @@ def add_to():
 		n.append(x)
 	push(n)
 
+def endl():
+	flush()
+	newline()
+
+def printf():
+	push("stdout")
+	write()
+
+def printl():
+	printf()
+	endl()
+
+def other():
+	push("Hello!")
+	printl()
+
 def main():
-	push(100)
+	other()
 	exit_hxa_code_var = pop()
 	exit(exit_hxa_code_var)
 

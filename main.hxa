@@ -1,87 +1,12 @@
 using  stdout.hxa
-using  stdin.hxa
-using  math.hxa
-using  structutils.hxa
-using  typeutils.hxa
-using  arrutils.hxa
 
-intf  myThread  {  as  private  changing  thread
-  push  nil
+intf  other  {
+	@private
+	push  "Hello!"
+	call  printl
 }
 
-intf  redef  {  re  myThread
-  //  Should push '100' instead of nil
-  push  100
-}
-
-struct  test  {  as  appendable
-  str  name,
-  bool  testBool,
-  int  age
-}
-
-intf  getAndPrint  {  as  extern  thread
-  bool  n  true
-  while  n  {
-    popa  x
-    push  x
-    call  to_str
-    str  y  ""
-    pop  y
-    push  y
-    call  stdout
-    if  y  ==  "100"  {
-      bool  n  false
-    }
-  }
-}
-
-intf  main  {  re  _start
-  include  methodTest
-
-  call  getAndPrint
-  call  myThread
-
-  bool  x  true
-  switch  x  {
-    case  true  {
-      push  "Hexa is awesome!"
-    }
-    case  false  {
-      push  "Hexa is still awesome!"
-    }
-  }
-  uint  test  0
-  ptr  y  test
-  push  y
-  push  0x4a
-  call  writeMem
-
-  arr  x  int  {1, 2, 3, 4, 5}
-
-  push  x
-  push  6
-  call  append
-
-  def  methodTest  x  {"Riley", 291}
-  push  methodTest
-  push  "m"
-  call  get
-  call  @
-}
-
-struct  methodTest  {
-  str  name,
-  intf  m  {  as  method
-    //  methods give access to a variable called 'this' which gives access to the struct instance and vars in that instance
-
-    push  this
-    push  "name"
-    call  get
-    str  x  ""
-    pop  x
-    push  x
-    call  stdout
-  },
-  int  age
+intf  main  {
+	!include  other
+	call  other
 }

@@ -1,9 +1,9 @@
 # version stuff
 major = '1'
-minor = '4'
+minor = '6'
 patch = '2'
 
-version = major + '.' + minor + '.' + 'patch'
+version = major + '.' + minor + '.' + patch
 
 
 
@@ -69,8 +69,9 @@ mainDef = False
 currentFuncReturnType = None
 inif = 0
 currentStruct = None
-
-
+privates = []
+scopeP = []
+changing = []
 
 
 
@@ -100,18 +101,24 @@ def worksAsInt(s):
 	return False
 
 def furtherAnalysis(l):
-	global currentFunc, currentFuncReturnType, funcs, inif, structs, lineno
+	global currentFunc, currentFuncReturnType, funcs, inif, structs, lineno, version, scopeP, changing
 	if l[0] == '}':
 		if inif > 0:
 			inif -= 1
 		elif currentFunc != None:
 			currentFunc = None
 			currentFuncReturnType = None
+			mainDef = False
 		else:
 			quit("SyntaxWarning: No scope to end with '}'! Lineno: " + str(lineno))
 	elif l[0] == 'call' and currentFunc != None:
 		if l[1] in builtInFuncs or l[1] in funcs:
-			funcs[currentFunc].append(('\t'*inif) +l[1] + '()')
+			if l[1] in privates and l[1] not in scopeP:
+				quit('Function <' + l[1] + '> is not accessible in this scope!')
+			elif l[1] in privates and l[1] in scopeP:
+				funcs[currentFunc].append(('\t'*inif) +l[1] + '()')
+			else:
+				funcs[currentFunc].append(('\t'*inif) +l[1] + '()')
 		elif l[1] == '@':
 			funcs[currentFunc].append(('\t'*inif) +'foo = pop()\n\tfoo()')
 		else:
@@ -131,18 +138,6 @@ def furtherAnalysis(l):
 			funcs[currentFunc].append(('\t'*inif) +"push(" + l[1] + ")\n\treturn None")
 		else:
 			quit('SyntaxError: Must be in a fuction to return!')
-	elif l[0] == 'intf' and currentFunc == None and l[2] == '{':
-		funcs[l[1]] = []
-		currentFunc = l[1]
-		currentFuncReturnType = 'int'
-	elif l[0] == 'strf' and currentFunc == None and l[2] == '{':
-		funcs[l[1]] = []
-		currentFunc = l[1]
-		currentFuncReturnType = 'str'
-	elif l[0] == 'autof' and currentFunc == None and l[2] == '{':
-		funcs[l[1]] = []
-		currentFunc = l[1]
-		currentFuncReturnType = 'auto'
 	elif l[0] == 'push':
 		funcs[currentFunc].append(('\t'*inif) +'push(' + l[1] + ')')
 	elif l[0] == 'pop':
@@ -175,6 +170,25 @@ def furtherAnalysis(l):
 	elif l[0] == 'else' and l[1] == '{':
 		funcs[currentFunc].append(('\t'*inif) + 'else:')
 		inif += 1
+	elif l[0] == '!getver':
+		funcs[currentFunc].append(('\t'*inif) + "push('" + version + "')")
+	elif l[0] == '@private':
+		if currentFunc not in privates:
+			privates.append(currentFunc)
+		else:
+			quit("Function <" + currentFunc + '> already declared as private!')
+	elif l[0] == '@changing':
+		if currentFunc not in changing:
+			changing.append(currentFunc)
+		else:
+			quit("Function <" + currentFunc + "> is already a changing function!")
+	elif l[0] == '!include':
+		if l[1] not in scopeP and l[1] in funcs:
+			 scopeP.append(l[1])
+		elif l[1] in funcs:
+			quit("Function <" + l[1] + '> already declared in this scope!')
+		else:
+			quit("Function <" + l[1])
 	elif l[0] == '':
 		pass
 	else:
@@ -192,33 +206,57 @@ def sCreation(l):
 
 
 def cmpl(l):
-	global mainDef, currentFunc, currentFuncReturnType, funcs, structs, currentStruct, inScruct, lineno
+	global mainDef, currentFunc, currentFuncReturnType, funcs, structs, currentStruct, inScruct, lineno, scopeP, changing
 	lineno += 1
 	o = l
 	l = l.strip().replace('\t', '').split('  ')
 	if mainDef:
 		furtherAnalysis(l)
-	#elif inScruct:
-	#	sCreation(l)
-	#elif l[0] == 'structure' and l[2] == '{':
-	#	structs[l[1]] = []
-	#	currentStruct = l[1]
-	#	inScruct = True
 	elif l[0] == 'intf' and currentFunc == None and l[2] == '{':
-		funcs[l[1]] = []
-		currentFunc = l[1]
-		currentFuncReturnType = 'int'
-		mainDef = True
+		if l[1] not in funcs:
+			funcs[l[1]] = []
+			currentFunc = l[1]
+			currentFuncReturnType = 'int'
+			scopeP = []
+			mainDef = True
+		elif l[1] in funcs and l[1] in changing:
+			funcs[l[1]] = []
+			currentFunc = l[1]
+			currentFuncReturnType = 'int'
+			scopeP = []
+			mainDef = True
+		else:
+			quit("Static function <" + l[1] + "> already exists!")
 	elif l[0] == 'strf' and currentFunc == None and l[2] == '{':
-		funcs[l[1]] = []
-		currentFunc = l[1]
-		currentFuncReturnType = 'str'
-		mainDef = True
+		if l[1] not in funcs:
+			funcs[l[1]] = []
+			currentFunc = l[1]
+			currentFuncReturnType = 'str'
+			scopeP = []
+			mainDef = True
+		elif l[1] in funcs and l[1] in changing:
+			funcs[l[1]] = []
+			currentFunc = l[1]
+			currentFuncReturnType = 'str'
+			scopeP = []
+			mainDef = True
+		else:
+			quit("Static function <" + l[1] + "> already exists!")
 	elif l[0] == 'autof' and currentFunc == None and l[2] == '{':
-		funcs[l[1]] = []
-		currentFunc = l[1]
-		currentFuncReturnType = 'auto'
-		mainDef = True
+		if l[1] not in funcs:
+			funcs[l[1]] = []
+			currentFunc = l[1]
+			currentFuncReturnType = 'auto'
+			scopeP = []
+			mainDef = True
+		elif l[1] in funcs and l[1] in changing:
+			funcs[l[1]] = []
+			currentFunc = l[1]
+			currentFuncReturnType = 'auto'
+			scopeP = []
+			mainDef = True
+		else:
+			quit("Static function <" + l[1] + "> already exists!")
 	elif l[0] == 'using':
 		m = os.getcwd()
 		os.chdir('libs')
