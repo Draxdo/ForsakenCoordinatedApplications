@@ -1,0 +1,18 @@
+intf  err  {
+	str  type  ""
+	str  info  ""
+	str  whole  ""
+	pop  info
+	pop  type
+	push  " | "
+	push  type
+	call  add
+	pop  type
+	push  info
+	push  type
+	call  add
+	pop  whole
+	push  whole
+	push  "stderr"
+	call  write
+}

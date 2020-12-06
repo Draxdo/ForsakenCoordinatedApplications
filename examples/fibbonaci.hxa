@@ -1,0 +1,39 @@
+//  Imports
+using  stdout.hxa
+
+//  The actual function. Main is not required.
+intf  fib  {
+	int  times  0
+	pop  times
+	int  x  1
+	int  y  1
+	int  z  0
+	while  times  >=  1  {
+		push  x
+		push  y
+		call  add
+		call  restore_ptr
+		pop  z
+		int  y  x
+		int  x  z
+		push  x
+		call  to_str
+		call  restore_ptr
+		str  v  ""
+		pop  v
+		push  v
+		call  printl
+		call  restore_ptr
+		push  times
+		push  1
+		call  sub
+		pop  times
+	}
+}
+
+//  Not required. 'fib' is the actual function.
+intf  main  {
+	push  10
+	//  10 is 'times' and that can be any integer.
+	call  fib
+}

@@ -1,0 +1,21 @@
+autof  getArr  {
+	auto  x  []
+	int  y  0
+	pop  y
+	while  y  >=  0  {
+		push  n
+		call  append
+		pop  n
+	}
+	return  n
+}
+
+autof  append  {
+	call add_to
+}
+
+autof  get  {
+	auto  n  []
+	pop  n
+	
+}

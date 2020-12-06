@@ -1,0 +1,26 @@
+structure  person  {
+	str  name
+	int  age
+}
+
+int  main  {
+	def  erson  "Riley"  18
+	push  merson
+	push  "name"
+	call  get
+	str  x  ""
+	pop  x
+}
+
+########
+
+class person:
+	def __init__(self, stuff):
+		self.stuff = stuff
+	def get(self, x):
+		return self.stuff[x]
+
+def get():
+	n = pop()
+	s = pop()
+	s.get(n)

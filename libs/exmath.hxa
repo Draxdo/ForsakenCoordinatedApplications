@@ -1,0 +1,21 @@
+intf  power  {
+	int  x  0
+	int  y  0
+	pop  x
+	pop  y
+	push  1
+	push  y
+	call  sub
+	pop  y
+	int  z  x
+	while  y  >=  1  {
+		push  x
+		push  z
+	  call  mul
+		push  1
+		push  y
+		call  sub
+		pop  y
+	}
+	return  z
+}

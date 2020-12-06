@@ -1,0 +1,14 @@
+intf  endl  {
+	call  flush
+	call  newline
+}
+
+intf  printf  {
+	push  "stdout"
+	call  write
+}
+
+intf  printl  {
+	call  printf
+	call  endl
+}
