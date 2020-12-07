@@ -279,12 +279,15 @@ def cmpl(l):
 
 def cmpf(f):
 	global funcs
-	with open(f, 'r') as file:
-		for l in file:
-			try:
-				cmpl(l)
-			except IndexError:
-				pass
+	try:
+		with open(f, 'r') as file:
+			for l in file:
+				try:
+					cmpl(l)
+				except IndexError:
+					pass
+	except:
+		quit("Specified file does not exist!")
 	with open(f.replace('.hxa', '1.py'), 'w') as file:
 		file.write('global pointer\npointer = 9999\nstack = [0' + (',0 '*9999) + ']\n\n')
 		with open('utils/baseFuncs.py', 'r') as fno:
