@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 using namespace std;
 
 int main (int argc, char** argv) {
@@ -9,8 +10,11 @@ int main (int argc, char** argv) {
 		cout << "Usage: hexa <file>";
 		status = 1;
 	} else {
-		char** file = argv[1];
-		status = system("hexa.py " + file);
+		const char* x = "hexa.py ";
+		const char* file = argv[1];
+		string result = string(x) + string(file);
+		char *cstr = &result[0];
+		status = system(cstr);
 	}
 
   return status;
