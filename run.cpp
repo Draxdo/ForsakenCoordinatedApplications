@@ -9,7 +9,7 @@ int main (int argc, char** argv) {
 		cout << "Usage: hexa <file>";
 		status = 1;
 	} else {
-		file = argv[1];
+		string file = argv[1];
 		status = system("hexa.py " + file);
 	}
 
