@@ -309,7 +309,8 @@ def cmpf(f):
 					cmpl(l)
 				except IndexError:
 					pass
-	except:
+	except FileNotFoundError as e:
+		print(str(e))
 		quit("Specified file does not exist!")
 	with open(f.replace('.hxa', '1.py'), 'w') as file:
 		file.write('global pointer\npointer = 9999\nstack = [0' + (',0 '*9999) + ']\n\n')
