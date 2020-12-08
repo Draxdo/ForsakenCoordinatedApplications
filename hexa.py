@@ -73,6 +73,8 @@ currentStruct = None
 privates = []
 scopeP = []
 changing = []
+path = "/home/hexa"
+bools = []
 
 
 
@@ -149,6 +151,13 @@ def furtherAnalysis(l):
 			strs.append(l[1])
 		else:
 			quit('TypeError: var {' + l[1] + '} needs to be an str!')
+	elif l[0] == 'bool':
+		if l[2] in ['True', 'False', 'None']:
+			funcs[currentFunc].append(('\t'*inif) +l[1] + " = " + l[2])
+		elif l[2] in bools:
+			funcs[currentFunc].append(('\t'*inif) + l[1] + " = " + l[2])
+		else:
+			quit('TypeError: var {' + l[1] + '} needs to be a bool!')
 	elif l[0] == 'int':
 		if worksAsInt(l[2]) or l[2] in ints:
 			funcs[currentFunc].append(('\t'*inif) +l[1] + ' = ' + l[2])
@@ -243,6 +252,21 @@ def cmpl(l):
 			mainDef = True
 		else:
 			quit("Static function <" + l[1] + "> already exists!")
+	elif l[0] == 'boolf' and currentFunc == None and l[2] == '{':
+		if l[1] not in funcs:
+			funcs[l[1]] = []
+			currentFunc = l[1]
+			currentFuncReturnType = 'bool'
+			scopeP = []
+			mainDef = True
+		elif l[1] in funcs and l[1] in changing:
+			funcs[l[1]] = []
+			currentFunc = l[1]
+			currentFuncReturnType = 'bool'
+			scopeP = []
+			mainDef = True
+		else:
+			quit("Static function <" + l[1] + "> already exists!")
 	elif l[0] == 'autof' and currentFunc == None and l[2] == '{':
 		if l[1] not in funcs:
 			funcs[l[1]] = []
@@ -260,7 +284,7 @@ def cmpl(l):
 			quit("Static function <" + l[1] + "> already exists!")
 	elif l[0] == 'using':
 		m = os.getcwd()
-		os.chdir('libs')
+		os.chdir(path + '/libs')
 		name = l[1][0:]
 		print('Importing ' + os.getcwd() + '/' + name + '...')
 		mainDef = True
@@ -290,7 +314,7 @@ def cmpf(f):
 		quit("Specified file does not exist!")
 	with open(f.replace('.hxa', '1.py'), 'w') as file:
 		file.write('global pointer\npointer = 9999\nstack = [0' + (',0 '*9999) + ']\n\n')
-		with open('utils/baseFuncs.py', 'r') as fno:
+		with open(path + '/utils/baseFuncs.py', 'r') as fno:
 			for l in fno:
 				file.write(l)
 		for func in funcs:
