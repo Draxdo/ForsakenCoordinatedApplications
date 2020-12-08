@@ -14,7 +14,6 @@ bool replace(std::string& str, const std::string& from, const std::string& to) {
 
 int main (int argc, char** argv) {
 	int status;
-	cout << argc << endl;
   if (argc != 2) {
 		cout << "Usage: hexa <file>\n";
 		status = 1;

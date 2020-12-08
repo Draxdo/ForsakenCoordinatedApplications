@@ -73,7 +73,6 @@ currentStruct = None
 privates = []
 scopeP = []
 changing = []
-path = "/home/hexa"
 bools = []
 
 
