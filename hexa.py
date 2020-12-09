@@ -372,7 +372,7 @@ def cmpf(f):
 					pass
 	except FileNotFoundError as e:
 		quit("Specified file does not exist!")
-	with open(f.replace('.hxa', '1.py'), 'w') as file:
+	with open(f.replace('.hxa', '.py'), 'w') as file:
 		file.write('global pointer\npointer = 9999\nstack = [0' + (',0 '*9999) + ']\n\n')
 		with open(path + '/utils/baseFuncs.py', 'r') as fno:
 			for l in fno:

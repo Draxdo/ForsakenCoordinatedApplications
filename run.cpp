@@ -14,27 +14,40 @@ bool replace(std::string& str, const std::string& from, const std::string& to) {
 
 int main (int argc, char** argv) {
 	int status;
-  if (argc != 2) {
+  if (argc != 3) {
 		cout << "Usage: hexa <file>\n";
 		status = 1;
 	} else {
-		const char* x = "hexa.py ";
-		const char* file = argv[1];
-		string result = string(x) + string(file);
-		char *cstr = &result[0];
-		status = system(cstr);
-		string y = string(file);
-		replace(y, ".hxa", "1.py");
-		string result2 = "python3 " + y;
-		char *cstr2 = &result2[0];
-		string result3 = "pyinstaller " + y;
-		char *cstr3 = &result3[0];
-		system(cstr3);
-		system("clear");
-		system(cstr2);
-		string result4 = "rm " + y;
-		char *cstr4 = &result4[0];
-		system(cstr4);
+		if (argv[1] == "build" || argv[1] == "run") {
+			const char* x = "hexa.py ";
+			const char* file = argv[2];
+			string result = string(x) + string(file);
+			char *cstr = &result[0];
+			status = system(cstr);
+			string y = string(file);
+			replace(y, ".hxa", ".py");
+			char *cstr2 = &result2[0];
+			string result3 = "pyinstaller " + y;
+			char *cstr3 = &result3[0];
+			system(cstr3);
+			if (argv[1] == "run") {
+				string z = y;
+				system("clear");
+				replace(z, ".py", "");
+				string no = z;
+				string z = "./" + z;
+				string no = "cd " + no; 
+				char *cstrx = &no[0];
+				char *cstrn = &z[0];
+				system(cstrx);
+				system(cstrx);
+				system(cstrn);
+				system("cd ../..");
+			}
+			string result4 = "rm " + y;
+			char *cstr4 = &result4[0];
+			system(cstr4);
+		}
 	}
 
   return status;
