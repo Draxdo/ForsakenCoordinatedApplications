@@ -381,8 +381,6 @@ def cmpf(f):
 			file.write('\n\ndef ' + func + '():')
 			for l in funcs[func]:
 				file.write('\n\t'+l)
-			if func == 'main':
-				file.write('\n\texit_hxa_code_var = pop()\n\texit(exit_hxa_code_var)')
 		for struct in structs:
 			file.write('\n\nclass ' + struct + ':')
 			for l in structs[struct]:
