@@ -23,14 +23,15 @@ int main (int argc, char** argv) {
 		string result = string(x) + string(file);
 		char *cstr = &result[0];
 		status = system(cstr);
-		replace(result, ".hxa", "1.py");
-		string result2 = "python3 " + result;
+		string y = string(file);
+		replace(y, ".hxa", "1.py");
+		string result2 = "python3 " + y;
 		char *cstr2 = &result2[0];
 		system(cstr2);
-		string result3 = "pyinstaller " + result;
+		string result3 = "pyinstaller " + y;
 		char *cstr3 = &result3[0];
 		system(cstr3);
-		string result4 = "rm " + result;
+		string result4 = "rm " + y;
 		char *cstr4 = &result4[0];
 		system(cstr4);
 	}
