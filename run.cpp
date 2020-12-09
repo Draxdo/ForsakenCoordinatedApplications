@@ -38,7 +38,7 @@ int main (int argc, char** argv) {
 				no = "cd " + no; 
 				char *cstrx = &no[0];
 				char *cstrn = &z[0];
-				system(cstrx);
+				system("cd dist");
 				system(cstrx);
 				system(cstrn);
 				system("cd ../..");
