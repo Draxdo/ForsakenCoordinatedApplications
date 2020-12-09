@@ -18,7 +18,7 @@ int main (int argc, char** argv) {
 		cout << "Usage: hexa <build/run> <file>\n";
 		status = 1;
 	} else {
-		if (argv[1] == "build" || argv[1] == "run") {
+		if (string(argv[1]) == "build" || string(argv[1]) == "run") {
 			const char* x = "hexa.py ";
 			const char* file = argv[2];
 			string result = string(x) + string(file);
