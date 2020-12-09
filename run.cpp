@@ -29,7 +29,7 @@ int main (int argc, char** argv) {
 			string result3 = "pyinstaller " + y;
 			char *cstr3 = &result3[0];
 			system(cstr3);
-			if (argv[1] == "run") {
+			if (string(argv[1]) == "run") {
 				string z = y;
 				system("clear");
 				replace(z, ".py", "");
