@@ -30,8 +30,9 @@ int main (int argc, char** argv) {
 			char *cstr3 = &result3[0];
 			system(cstr3);
 			if (string(argv[1]) == "run") {
-				y = "python3 " + y;
-				char *fstr = &y[0];
+				string z = "python3 " + y;
+				char *fstr = &z[0];
+				system("clear");
 				system(fstr);
 			}
 			string result4 = "rm " + y;

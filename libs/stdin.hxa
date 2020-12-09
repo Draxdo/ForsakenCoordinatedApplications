@@ -2,13 +2,13 @@ strf  scanf  {
 	str  out  ""
 	str  char  ""
 	while  char  !=  "\n"  {
-		push  1
-		call  stdin
-		pop  char
 		push  char
 		push  out
 		call  add
 		pop  out
+		push  1
+		call  stdin
+		pop  char
 	}
 	return  out
 }
