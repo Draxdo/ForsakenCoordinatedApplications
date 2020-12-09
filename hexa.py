@@ -30,6 +30,7 @@ import sys
 # globals
 
 currentFunc = None
+path = ''
 funcs = {
 }
 builtInFuncs = [
@@ -219,9 +220,7 @@ def cmpl(l):
 	lineno += 1
 	o = l
 	l = l.strip().replace('\t', '').split('  ')
-	if mainDef:
-		furtherAnalysis(l)
-	elif l[0] == 'intf' and currentFunc == None and l[2] == '{':
+	if l[0] == 'intf' and currentFunc == None and l[2] == '{':
 		if l[1] not in funcs:
 			funcs[l[1]] = []
 			currentFunc = l[1]
@@ -310,7 +309,6 @@ def cmpf(f):
 				except IndexError:
 					pass
 	except FileNotFoundError as e:
-		print(str(e))
 		quit("Specified file does not exist!")
 	with open(f.replace('.hxa', '1.py'), 'w') as file:
 		file.write('global pointer\npointer = 9999\nstack = [0' + (',0 '*9999) + ']\n\n')
