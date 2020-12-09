@@ -15,7 +15,7 @@ bool replace(std::string& str, const std::string& from, const std::string& to) {
 int main (int argc, char** argv) {
 	int status;
   if (argc != 3) {
-		cout << "Usage: hexa <file>\n";
+		cout << "Usage: hexa <build/run> <file>\n";
 		status = 1;
 	} else {
 		if (argv[1] == "build" || argv[1] == "run") {
@@ -46,6 +46,8 @@ int main (int argc, char** argv) {
 			string result4 = "rm " + y;
 			char *cstr4 = &result4[0];
 			system(cstr4);
+		} else {
+			cout << "Unknown stream |" << string(a)
 		}
 	}
 
