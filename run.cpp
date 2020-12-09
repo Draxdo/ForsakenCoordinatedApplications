@@ -26,7 +26,6 @@ int main (int argc, char** argv) {
 			status = system(cstr);
 			string y = string(file);
 			replace(y, ".hxa", ".py");
-			char *cstr2 = &result2[0];
 			string result3 = "pyinstaller " + y;
 			char *cstr3 = &result3[0];
 			system(cstr3);
@@ -35,8 +34,8 @@ int main (int argc, char** argv) {
 				system("clear");
 				replace(z, ".py", "");
 				string no = z;
-				string z = "./" + z;
-				string no = "cd " + no; 
+			 	z = "./" + z;
+				no = "cd " + no; 
 				char *cstrx = &no[0];
 				char *cstrn = &z[0];
 				system(cstrx);
