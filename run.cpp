@@ -47,7 +47,7 @@ int main (int argc, char** argv) {
 			char *cstr4 = &result4[0];
 			system(cstr4);
 		} else {
-			cout << "Unknown stream |" << string(a)
+			cout << "Unknown stream |" << string(argv[1]) << "|\n";
 		}
 	}
 
