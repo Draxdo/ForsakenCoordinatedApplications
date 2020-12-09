@@ -27,10 +27,11 @@ int main (int argc, char** argv) {
 		replace(y, ".hxa", "1.py");
 		string result2 = "python3 " + y;
 		char *cstr2 = &result2[0];
-		system(cstr2);
 		string result3 = "pyinstaller " + y;
 		char *cstr3 = &result3[0];
 		system(cstr3);
+		system("clear");
+		system(cstr2);
 		string result4 = "rm " + y;
 		char *cstr4 = &result4[0];
 		system(cstr4);
