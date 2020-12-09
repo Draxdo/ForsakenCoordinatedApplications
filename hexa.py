@@ -105,7 +105,67 @@ def worksAsInt(s):
 
 def furtherAnalysis(l):
 	global currentFunc, currentFuncReturnType, funcs, inif, structs, lineno, version, scopeP, changing
-	if l[0] == '}':
+	if l[0] == 'intf' and currentFunc == None and l[2] == '{':
+		if l[1] not in funcs:
+			funcs[l[1]] = []
+			currentFunc = l[1]
+			currentFuncReturnType = 'int'
+			scopeP = []
+			mainDef = True
+		elif l[1] in funcs and l[1] in changing:
+			funcs[l[1]] = []
+			currentFunc = l[1]
+			currentFuncReturnType = 'int'
+			scopeP = []
+			mainDef = True
+		else:
+			quit("Static function <" + l[1] + "> already exists!")
+	elif l[0] == 'strf' and currentFunc == None and l[2] == '{':
+		if l[1] not in funcs:
+			funcs[l[1]] = []
+			currentFunc = l[1]
+			currentFuncReturnType = 'str'
+			scopeP = []
+			mainDef = True
+		elif l[1] in funcs and l[1] in changing:
+			funcs[l[1]] = []
+			currentFunc = l[1]
+			currentFuncReturnType = 'str'
+			scopeP = []
+			mainDef = True
+		else:
+			quit("Static function <" + l[1] + "> already exists!")
+	elif l[0] == 'boolf' and currentFunc == None and l[2] == '{':
+		if l[1] not in funcs:
+			funcs[l[1]] = []
+			currentFunc = l[1]
+			currentFuncReturnType = 'bool'
+			scopeP = []
+			mainDef = True
+		elif l[1] in funcs and l[1] in changing:
+			funcs[l[1]] = []
+			currentFunc = l[1]
+			currentFuncReturnType = 'bool'
+			scopeP = []
+			mainDef = True
+		else:
+			quit("Static function <" + l[1] + "> already exists!")
+	elif l[0] == 'autof' and currentFunc == None and l[2] == '{':
+		if l[1] not in funcs:
+			funcs[l[1]] = []
+			currentFunc = l[1]
+			currentFuncReturnType = 'auto'
+			scopeP = []
+			mainDef = True
+		elif l[1] in funcs and l[1] in changing:
+			funcs[l[1]] = []
+			currentFunc = l[1]
+			currentFuncReturnType = 'auto'
+			scopeP = []
+			mainDef = True
+		else:
+			quit("Static function <" + l[1] + "> already exists!")
+	elif l[0] == '}':
 		if inif > 0:
 			inif -= 1
 		elif currentFunc != None:
@@ -220,7 +280,9 @@ def cmpl(l):
 	lineno += 1
 	o = l
 	l = l.strip().replace('\t', '').split('  ')
-	if l[0] == 'intf' and currentFunc == None and l[2] == '{':
+	if mainDef:
+		furtherAnalysis(l)
+	elif l[0] == 'intf' and currentFunc == None and l[2] == '{':
 		if l[1] not in funcs:
 			funcs[l[1]] = []
 			currentFunc = l[1]
