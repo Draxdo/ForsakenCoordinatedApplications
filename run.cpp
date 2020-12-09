@@ -30,18 +30,9 @@ int main (int argc, char** argv) {
 			char *cstr3 = &result3[0];
 			system(cstr3);
 			if (string(argv[1]) == "run") {
-				string z = y;
-				system("clear");
-				replace(z, ".py", "");
-				string no = z;
-			 	z = "./" + z;
-				no = "cd " + no; 
-				char *cstrx = &no[0];
-				char *cstrn = &z[0];
-				system("cd dist");
-				system(cstrx);
-				system(cstrn);
-				system("cd ../..");
+				y = "python3 " + y;
+				char *fstr = &y[0];
+				system(fstr);
 			}
 			string result4 = "rm " + y;
 			char *cstr4 = &result4[0];
