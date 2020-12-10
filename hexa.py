@@ -2,7 +2,7 @@
 # version stuff
 major = '1'
 minor = '6'
-patch = '2'
+patch = '8'
 
 version = major + '.' + minor + '.' + patch
 
@@ -47,7 +47,14 @@ builtInFuncs = [
 	'div',
 	'mul',
 	'restore_ptr',
-	'add_to'
+	'add_to',
+	'fout',
+	'fin',
+	'system',
+	'chdir',
+	'remove',
+	'makefile',
+	'getcwd'
 ]
 structs = {
 }
@@ -75,6 +82,8 @@ privates = []
 scopeP = []
 changing = []
 bools = []
+dubs = []
+threads = []
 
 
 
@@ -104,7 +113,7 @@ def worksAsInt(s):
 	return False
 
 def furtherAnalysis(l):
-	global currentFunc, currentFuncReturnType, funcs, inif, structs, lineno, version, scopeP, changing
+	global currentFunc, currentFuncReturnType, funcs, inif, structs, lineno, version, scopeP, changing, threads
 	if l[0] == 'intf' and currentFunc == None and l[2] == '{':
 		if l[1] not in funcs:
 			funcs[l[1]] = []
@@ -131,6 +140,21 @@ def furtherAnalysis(l):
 			funcs[l[1]] = []
 			currentFunc = l[1]
 			currentFuncReturnType = 'str'
+			scopeP = []
+			mainDef = True
+		else:
+			quit("Static function <" + l[1] + "> already exists!")
+	elif l[0] == 'doublef' and currentFunc == None and l[2] == '{':
+		if l[1] not in funcs:
+			funcs[l[1]] = []
+			currentFunc = l[1]
+			currentFuncReturnType = 'dub'
+			scopeP = []
+			mainDef = True
+		elif l[1] in funcs and l[1] in changing:
+			funcs[l[1]] = []
+			currentFunc = l[1]
+			currentFuncReturnType = 'dub'
 			scopeP = []
 			mainDef = True
 		else:
@@ -179,9 +203,15 @@ def furtherAnalysis(l):
 			if l[1] in privates and l[1] not in scopeP:
 				quit('Function <' + l[1] + '> is not accessible in this scope!')
 			elif l[1] in privates and l[1] in scopeP:
-				funcs[currentFunc].append(('\t'*inif) +l[1] + '()')
+				if l[1] in threads:
+					funcs[currentFunc].append(('\t'*inif) + "threading._start_new_thread(" +l[1] + ', ())')
+				else:
+					funcs[currentFunc].append(('\t'*inif) +l[1] + '()')
 			else:
-				funcs[currentFunc].append(('\t'*inif) +l[1] + '()')
+				if l[1] in threads:
+					funcs[currentFunc].append(('\t'*inif) + "threading._start_new_thread(" +l[1] + ', ())')
+				else:
+					funcs[currentFunc].append(('\t'*inif) +l[1] + '()')
 		elif l[1] == '@':
 			funcs[currentFunc].append(('\t'*inif) +'foo = pop()\n\tfoo()')
 		else:
@@ -224,6 +254,12 @@ def furtherAnalysis(l):
 			ints.append(l[1])
 		else:
 			quit('TypeError: var {' + l[1] + '} needs to be an int!')
+	elif l[0] == 'double':
+		if worksAsDub(l[2]) or l[2] in dubs:
+			funcs[currentFunc].append(('\t'*inif) +l[1] + ' = ' + l[2])
+			dubs.append(l[1])
+		else:
+			quit('TypeError: var {' + l[1] + '} needs to be an double!')
 	elif l[0] == 'auto':
 			funcs[currentFunc].append(('\t'*inif) + l[1] + ' = ' + l[2])
 	elif l[0] == '//':
@@ -252,6 +288,11 @@ def furtherAnalysis(l):
 			changing.append(currentFunc)
 		else:
 			quit("Function <" + currentFunc + "> is already a changing function!")
+	elif l[0] == '@thread':
+		if currentFunc not in threads:
+			threads.append(currentFunc)
+		else:
+			quit("Function <" + currentFunc + "> is already a thread function!")
 	elif l[0] == '!include':
 		if l[1] not in scopeP and l[1] in funcs:
 			 scopeP.append(l[1])
@@ -293,6 +334,21 @@ def cmpl(l):
 			funcs[l[1]] = []
 			currentFunc = l[1]
 			currentFuncReturnType = 'int'
+			scopeP = []
+			mainDef = True
+		else:
+			quit("Static function <" + l[1] + "> already exists!")
+	elif l[0] == 'doublef' and currentFunc == None and l[2] == '{':
+		if l[1] not in funcs:
+			funcs[l[1]] = []
+			currentFunc = l[1]
+			currentFuncReturnType = 'dub'
+			scopeP = []
+			mainDef = True
+		elif l[1] in funcs and l[1] in changing:
+			funcs[l[1]] = []
+			currentFunc = l[1]
+			currentFuncReturnType = 'dub'
 			scopeP = []
 			mainDef = True
 		else:

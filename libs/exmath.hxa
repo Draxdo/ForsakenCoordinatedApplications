@@ -19,3 +19,23 @@ intf  power  {
 	}
 	return  z
 }
+
+intf  square  {
+	int  n  0
+	pop  n
+	push  2
+	push  n
+	call  power
+	pop  n
+	return  n
+}
+
+intf  cube  {
+	int  n  0
+	pop  n
+	push  3
+	push  n
+	call  power
+	pop  n
+	return  n
+}

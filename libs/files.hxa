@@ -1,0 +1,9 @@
+intf  write  {
+	push  "w"
+	call  fout
+}
+
+intf  append  {
+	push  "a"
+	call  fout
+}

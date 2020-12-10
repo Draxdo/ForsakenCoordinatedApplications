@@ -1,5 +1,7 @@
 import sys
 import math
+import os
+import threading
 
 balance = 0
 
@@ -36,6 +38,53 @@ def sub():
 
 def flush():
 	sys.stdout.flush()
+
+def fout():
+	p = pop()
+	f = pop()
+	x = pop()
+	if p not in ['a', 'w']:
+		quit("Unknown protocol '" + p + "'")
+	try:
+		with open(f, p) as file:
+			file.write(x)
+	except:
+		quit("FileError while writing!")
+
+def fin():
+	f = pop()
+	b = pop()
+	try:
+		with open(f, 'r') as file:
+			push(file.read(f, b))
+	except:
+		quit("FileError while reading!")
+
+def system():
+	x = pop()
+	os.system(x)
+
+def chdir():
+	x = pop()
+	os.chdir(x)
+
+def remove():
+	x = pop()
+	try:
+		os.remove(x)
+	except:
+		quit("Error whilst removal!")
+
+def makefile():
+	x = pop()
+	try:
+		with open(x, 'w') as fw:
+			fw.write('')
+	except:
+		quit("Error whilst file creation!")
+
+def getcwd():
+	push(os.getcwd())
 
 def write():
 	f = pop()

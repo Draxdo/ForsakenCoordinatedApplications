@@ -32,7 +32,9 @@ int main (int argc, char** argv) {
 			if (string(argv[1]) == "run") {
 				string z = "python3 " + y;
 				char *fstr = &z[0];
-				system("clear");
+				if (argc != 4 && argv[3] != "nc") {
+					system("clear");
+				}
 				system(fstr);
 			}
 			string result4 = "rm " + y;
