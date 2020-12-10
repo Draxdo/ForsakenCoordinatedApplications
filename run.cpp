@@ -39,7 +39,9 @@ int main (int argc, char** argv) {
 			}
 			string result4 = "rm " + y;
 			char *cstr4 = &result4[0];
-			system(cstr4);
+			if (argc != 4 && argv[3] != "nd") {
+					system(cstr4);
+			}
 		} else {
 			cout << "Unknown stream |" << string(argv[1]) << "|\n";
 		}
