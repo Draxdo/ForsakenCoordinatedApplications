@@ -14,7 +14,7 @@ bool replace(std::string& str, const std::string& from, const std::string& to) {
 
 int main (int argc, char** argv) {
 	int status;
-  if (argc != 3) {
+  if (argc != 3 && argc != 4) {
 		cout << "Usage: hexa <build/run> <file>\n";
 		status = 1;
 	} else {
