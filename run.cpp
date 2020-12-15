@@ -26,8 +26,13 @@ int main (int argc, char** argv) {
 			status = system(cstr);
 			string y = string(file);
 			replace(y, ".hxa", ".py");
-			string result3 = "pyinstaller " + y;
+			string result3 = "pyinstaller " + y + " --onefile";
+			string n = string(file);
+			replace(n, ".hxa", "")
+			string res = "rm -rf /dist/" + n;
+			char *cstrxx = &res[0];
 			char *cstr3 = &result3[0];
+			system(cstrxx);
 			system(cstr3);
 			if (string(argv[1]) == "run") {
 				string z = "python3 " + y;

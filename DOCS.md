@@ -47,3 +47,18 @@ Hexa is a completely stack-based language meaning that to get much done you must
 The stack is a Last In-First Out or LIFO data structure.
 
 The stack is just like a stack of anything really you can put an item on top of the stack by using the syntax `push  <value/variable>` and take the item on top of the stack off by using the syntax `pop  <variable>` and it will store that value in the variable specified.
+
+# Variables
+
+Here are the data types in Hexa.
+
+- int
+- str
+- bool
+- auto
+- double
+- functions are also a type
+
+In future updates this list is sure to get updates with things such as 'char', 'struct', and 'arr'.
+
+Variable definition 
