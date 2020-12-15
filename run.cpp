@@ -28,7 +28,7 @@ int main (int argc, char** argv) {
 			replace(y, ".hxa", ".py");
 			string result3 = "pyinstaller " + y + " --onefile";
 			string n = string(file);
-			replace(n, ".hxa", "")
+			replace(n, ".hxa", "");
 			string res = "rm -rf /dist/" + n;
 			char *cstrxx = &res[0];
 			char *cstr3 = &result3[0];
