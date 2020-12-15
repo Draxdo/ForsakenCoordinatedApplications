@@ -38,10 +38,14 @@ int main (int argc, char** argv) {
 			char *cstr3 = &result3[0];
 			char *cstr9 = &r2[0];
 			char *cstr8 = &r3[0];
+			char *ro = &r4[0];
+			char *ro2 = &r5[0];
 			system(cstrxx);
 			system(cstr3);
-			system(r2);
-			system(r3);
+			system(cstr2);
+			system(cstr3);
+			system(ro);
+			system(ro2);
 			if (string(argv[1]) == "run") {
 				string z = "python3 " + y;
 				char *fstr = &z[0];
