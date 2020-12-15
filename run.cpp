@@ -30,10 +30,18 @@ int main (int argc, char** argv) {
 			string n = string(file);
 			replace(n, ".hxa", "");
 			string res = "rm -rf /dist/" + n;
+			string r2 = "cp dist/" + n + " " + n;
+			string r3 = "rm -rf dist/";
+			string r4 = "rm -rf build";
+			string r5 = "rm " + n + ".spec";
 			char *cstrxx = &res[0];
 			char *cstr3 = &result3[0];
+			char *cstr9 = &r2[0];
+			char *cstr8 = &r3[0];
 			system(cstrxx);
 			system(cstr3);
+			system(r2);
+			system(r3);
 			if (string(argv[1]) == "run") {
 				string z = "python3 " + y;
 				char *fstr = &z[0];
