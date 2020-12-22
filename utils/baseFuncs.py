@@ -184,6 +184,7 @@ def puts():
 		newline()
 		push(0)
 	except:
+		print("Exception ignored: RUNTIMEERROR: STACK PTR BASED OVERFLOWERR")
 		push(1)
 
 def cin():
