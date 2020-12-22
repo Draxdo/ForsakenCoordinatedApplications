@@ -59,7 +59,8 @@ builtInFuncs = [
 	'put',
 	'cin',
 	'itoa',
-	'atoi'
+	'atoi',
+	'sizeof'
 ]
 structs = {
 }
@@ -469,14 +470,14 @@ def cmpf(f):
 		for l in upper:
 			file.write(l)
 		for func in funcs:
-			file.write('\n\ndef ' + func + '():')
+			file.write('\n\n\tdef ' + func + '():')
 			for l in funcs[func]:
-				file.write('\n\t'+l)
+				file.write('\n\t\t'+l)
 		for struct in structs:
-			file.write('\n\nclass ' + struct + ':')
+			file.write('\n\n\tclass ' + struct + ':')
 			for l in structs[struct]:
-				file.write('\n\t'+l)
-		file.write('\n\nmain()')
+				file.write('\n\t\t'+l)
+		file.write('\nexcept:\n\tquit("Segmentation fault (core dumped")\n\nmain()')
 
 if __name__ == '__main__':
 	cmpf(sys.argv[1])
