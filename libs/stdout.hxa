@@ -1,14 +1,15 @@
-intf  endl  {
+intf  endl  {  ()
 	call  flush
 	call  newline
 }
 
-intf  printf  {
+intf  printf  {  (s)
+	push  s
 	push  "stdout"
 	call  write
 }
 
-intf  printl  {
+intf  printl  {  ()
 	call  printf
 	call  endl
 }

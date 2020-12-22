@@ -92,6 +92,7 @@ dubs = []
 consts = {}
 threads = []
 upper = []
+funcargs = []
 
 
 
@@ -147,12 +148,14 @@ def furtherAnalysis(l):
 			currentFunc = l[1]
 			currentFuncReturnType = 'int'
 			scopeP = []
+			funcargs[l[1]] = l[3]
 			mainDef = True
 		elif l[1] in funcs and l[1] in changing:
 			funcs[l[1]] = []
 			currentFunc = l[1]
 			currentFuncReturnType = 'int'
 			scopeP = []
+			funcargs[l[1]] = l[3]
 			mainDef = True
 		else:
 			quit("Static function <" + l[1] + "> already exists!")
@@ -162,12 +165,14 @@ def furtherAnalysis(l):
 			currentFunc = l[1]
 			currentFuncReturnType = 'str'
 			scopeP = []
+			funcargs[l[1]] = l[3]
 			mainDef = True
 		elif l[1] in funcs and l[1] in changing:
 			funcs[l[1]] = []
 			currentFunc = l[1]
 			currentFuncReturnType = 'str'
 			scopeP = []
+			funcargs[l[1]] = l[3]
 			mainDef = True
 		else:
 			quit("Static function <" + l[1] + "> already exists!")
@@ -177,12 +182,14 @@ def furtherAnalysis(l):
 			currentFunc = l[1]
 			currentFuncReturnType = 'dub'
 			scopeP = []
+			funcargs[l[1]] = l[3]
 			mainDef = True
 		elif l[1] in funcs and l[1] in changing:
 			funcs[l[1]] = []
 			currentFunc = l[1]
 			currentFuncReturnType = 'dub'
 			scopeP = []
+			funcargs[l[1]] = l[3]
 			mainDef = True
 		else:
 			quit("Static function <" + l[1] + "> already exists!")
@@ -192,12 +199,14 @@ def furtherAnalysis(l):
 			currentFunc = l[1]
 			currentFuncReturnType = 'bool'
 			scopeP = []
+			funcargs[l[1]] = l[3]
 			mainDef = True
 		elif l[1] in funcs and l[1] in changing:
 			funcs[l[1]] = []
 			currentFunc = l[1]
 			currentFuncReturnType = 'bool'
 			scopeP = []
+			funcargs[l[1]] = l[3]
 			mainDef = True
 		else:
 			quit("Static function <" + l[1] + "> already exists!")
@@ -207,12 +216,14 @@ def furtherAnalysis(l):
 			currentFunc = l[1]
 			currentFuncReturnType = 'auto'
 			scopeP = []
+			funcargs[l[1]] = l[3]
 			mainDef = True
 		elif l[1] in funcs and l[1] in changing:
 			funcs[l[1]] = []
 			currentFunc = l[1]
 			currentFuncReturnType = 'auto'
 			scopeP = []
+			funcargs[l[1]] = l[3]
 			mainDef = True
 		else:
 			quit("Static function <" + l[1] + "> already exists!")
@@ -231,16 +242,16 @@ def furtherAnalysis(l):
 				quit('Function <' + l[1] + '> is not accessible in this scope!')
 			elif l[1] in privates and l[1] in scopeP:
 				if l[1] in threads:
-					funcs[currentFunc].append(('\t'*inif) + "threading._start_new_thread(" +l[1] + ', ())')
+					funcs[currentFunc].append(('\t'*inif) + "threading._start_new_thread(" +l[1] + ', '+ l[2]+' )')
 				else:
-					funcs[currentFunc].append(('\t'*inif) +l[1] + '()')
+					funcs[currentFunc].append(('\t'*inif) +l[1] + l[2])
 			else:
 				if l[1] in threads:
-					funcs[currentFunc].append(('\t'*inif) + "threading._start_new_thread(" +l[1] + ', ())')
+					funcs[currentFunc].append(('\t'*inif) + "threading._start_new_thread(" +l[1] + ', '+ l[2]+')')
 				else:
-					funcs[currentFunc].append(('\t'*inif) +l[1] + '()')
+					funcs[currentFunc].append(('\t'*inif) +l[1] + l[2])
 		elif l[1] == '@':
-			funcs[currentFunc].append(('\t'*inif) +'foo = pop()\n\tfoo()')
+			funcs[currentFunc].append(('\t'*inif) +'foo = pop()\n\tfoo' + l[2])
 		else:
 			quit("NameError: Function {" + l[1] + "} is undefined!")
 	elif l[0] == 'return':
@@ -344,7 +355,7 @@ def sCreation(l):
 
 
 def cmpl(l):
-	global mainDef, currentFunc, currentFuncReturnType, funcs, structs, currentStruct, inScruct, lineno, scopeP, changing
+	global mainDef, currentFunc, currentFuncReturnType, funcs, structs, currentStruct, inScruct, lineno, scopeP, changing, funcargs
 	lineno += 1
 	o = l
 	l = l.strip().replace('\t', '').split('  ')
@@ -356,16 +367,18 @@ def cmpl(l):
 			currentFunc = l[1]
 			currentFuncReturnType = 'int'
 			scopeP = []
+			funcargs[l[1]] = l[3]
 			mainDef = True
 		elif l[1] in funcs and l[1] in changing:
 			funcs[l[1]] = []
 			currentFunc = l[1]
 			currentFuncReturnType = 'int'
 			scopeP = []
+			funcargs[l[1]] = l[3]
 			mainDef = True
 		else:
 			quit("Static function <" + l[1] + "> already exists!")
-	elif l[0] == '#define' and l[1] not in consts and l[1] not in dubs and l[1] not in strs and l[1] not in ints and l[1] not in bools:
+	elif l[0] == 'define' and l[1] not in consts and l[1] not in dubs and l[1] not in strs and l[1] not in ints and l[1] not in bools:
 		upper.append(l[1] + " = " + l[2])
 		bools.append(l[1])
 		strs.append(l[1])
@@ -378,12 +391,14 @@ def cmpl(l):
 			currentFunc = l[1]
 			currentFuncReturnType = 'dub'
 			scopeP = []
+			funcargs[l[1]] = l[3]
 			mainDef = True
 		elif l[1] in funcs and l[1] in changing:
 			funcs[l[1]] = []
 			currentFunc = l[1]
 			currentFuncReturnType = 'dub'
 			scopeP = []
+			funcargs[l[1]] = l[3]
 			mainDef = True
 		else:
 			quit("Static function <" + l[1] + "> already exists!")
@@ -393,12 +408,14 @@ def cmpl(l):
 			currentFunc = l[1]
 			currentFuncReturnType = 'str'
 			scopeP = []
+			funcargs[l[1]] = l[3]
 			mainDef = True
 		elif l[1] in funcs and l[1] in changing:
 			funcs[l[1]] = []
 			currentFunc = l[1]
 			currentFuncReturnType = 'str'
 			scopeP = []
+			funcargs[l[1]] = l[3]
 			mainDef = True
 		else:
 			quit("Static function <" + l[1] + "> already exists!")
@@ -408,12 +425,14 @@ def cmpl(l):
 			currentFunc = l[1]
 			currentFuncReturnType = 'bool'
 			scopeP = []
+			funcargs[l[1]] = l[3]
 			mainDef = True
 		elif l[1] in funcs and l[1] in changing:
 			funcs[l[1]] = []
 			currentFunc = l[1]
 			currentFuncReturnType = 'bool'
 			scopeP = []
+			funcargs[l[1]] = l[3]
 			mainDef = True
 		else:
 			quit("Static function <" + l[1] + "> already exists!")
@@ -423,12 +442,14 @@ def cmpl(l):
 			currentFunc = l[1]
 			currentFuncReturnType = 'auto'
 			scopeP = []
+			funcargs[l[1]] = l[3]
 			mainDef = True
 		elif l[1] in funcs and l[1] in changing:
 			funcs[l[1]] = []
 			currentFunc = l[1]
 			currentFuncReturnType = 'auto'
 			scopeP = []
+			funcargs[l[1]] = l[3]
 			mainDef = True
 		else:
 			quit("Static function <" + l[1] + "> already exists!")
@@ -452,7 +473,7 @@ def cmpl(l):
 		quit('SyntaxError: Unknown statement: Lexer dump {' + str(l) + '}')
 
 def cmpf(f):
-	global funcs, upper
+	global funcs, upper, funcargs
 	try:
 		with open(f, 'r') as file:
 			for l in file:
@@ -470,14 +491,14 @@ def cmpf(f):
 		for l in upper:
 			file.write(l)
 		for func in funcs:
-			file.write('\n\n\tdef ' + func + '():')
+			file.write('\n\n\tdef ' + func + funcargs[func] + ':')
 			for l in funcs[func]:
 				file.write('\n\t\t'+l)
 		for struct in structs:
 			file.write('\n\n\tclass ' + struct + ':')
 			for l in structs[struct]:
 				file.write('\n\t\t'+l)
-		file.write('\nexcept:\n\tquit("Segmentation fault (core dumped")\n\nmain()')
+		file.write('\nexcept:\n\tquit("Segmentation fault (core dumped)")\n\nmain()')
 
 if __name__ == '__main__':
 	cmpf(sys.argv[1])
