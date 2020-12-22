@@ -71,9 +71,9 @@ comparators = [
 	'=>',
 	'!='
 ]
-constants = {
 
-}
+
+
 
 lineno = 0
 inScruct = False
