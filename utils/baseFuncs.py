@@ -180,11 +180,12 @@ def puts():
 	try:
 		x = pop()
 		for i in x:
-			put(i)
+			push(i)
+			put()
 		newline()
 		push(0)
 	except Exception as e:
-		print("Exception {" + str(e) + "} ignored: RUNTIMEERROR: STACK PTR BASED OVERFLOWERR")
+		print("Exception ignored: RUNTIMEERROR: STACK PTR BASED OVERFLOWERR")
 		push(1)
 
 def cin():
