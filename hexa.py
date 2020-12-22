@@ -251,7 +251,7 @@ def furtherAnalysis(l):
 				quit("TypeError: Function {" + currentFunc + "} supposed to return an integer!")
 		elif currentFuncReturnType == 'str' and currentFunc != None:
 			if l[1] in strs or l[1][0] == '"':
-				funcs[currentFunc].append(('\t'*inif) +"push(" + l[1] + ")\n\treturn None")
+				funcs[currentFunc].append(('\t'*inif) +"push(" + l[1] + ")\n\t\treturn None")
 			else:
 				quit("TypeError: Function {" + currentFunc + "} supposed to return an string!")
 		elif currentFunc != None:
