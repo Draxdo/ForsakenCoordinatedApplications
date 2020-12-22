@@ -21,7 +21,7 @@ int main (int argc, char** argv) {
 		if (string(argv[1]) == "build" || string(argv[1]) == "run") {
 			const char* x = "hexa.py ";
 			const char* file = argv[2];
-			string result = string(x) + string(file) + "";
+			string result = string(x) + string(file) + "&> /dev/null";
 			char *cstr = &result[0];
 			status = system(cstr);
 			string y = string(file);
