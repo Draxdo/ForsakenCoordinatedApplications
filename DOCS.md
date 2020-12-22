@@ -62,3 +62,39 @@ Here are the data types in Hexa.
 In future updates this list is sure to get updates with things such as 'char', 'struct', and 'arr'.
 
 Variable definition 
+
+```
+<type>  <name>  <value>
+```
+
+So, for example.
+
+```
+int  x  2
+```
+
+Strings look like this:
+
+```
+str  y  "Hello"
+```
+
+Bools look like this
+
+```
+bool  z  True
+//  or
+bool  z  False
+```
+
+Auto's look like this
+
+```
+auto  x  <anything that fits the other types can go here>
+```
+
+Doubles look like this
+
+```
+double  y  0.5
+```

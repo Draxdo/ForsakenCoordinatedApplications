@@ -54,7 +54,12 @@ builtInFuncs = [
 	'chdir',
 	'remove',
 	'makefile',
-	'getcwd'
+	'getcwd',
+	'puts',
+	'put',
+	'cin',
+	'itoa',
+	'atoi'
 ]
 structs = {
 }
@@ -83,7 +88,9 @@ scopeP = []
 changing = []
 bools = []
 dubs = []
+consts = {}
 threads = []
+upper = []
 
 
 
@@ -102,7 +109,26 @@ def worksAsDub(s):
 	except:
 		return False
 	return False
+	
+def realLen(s):
+	return len(s) - 1
+	
+def getLast(s):
+	return s[realLen(s)]
+	
 
+def worksasarr(s):
+	if realLen(s) >= 1:
+		f = s[0]
+		l = getLast(s)
+		if f == "[" and l == "]":
+			return True
+		else: 
+			return False
+	else:
+		return False
+	return False
+	
 
 def worksAsInt(s):
 	try:
@@ -338,6 +364,13 @@ def cmpl(l):
 			mainDef = True
 		else:
 			quit("Static function <" + l[1] + "> already exists!")
+	elif l[0] == '#define' and l[1] not in consts and l[1] not in dubs and l[1] not in strs and l[1] not in ints and l[1] not in bools:
+		upper.append(l[1] + " = " + l[2])
+		bools.append(l[1])
+		strs.append(l[1])
+		ints.append(l[1])
+		dubs.append(l[1])
+		print("Defined constant {" + l[1] + "}")
 	elif l[0] == 'doublef' and currentFunc == None and l[2] == '{':
 		if l[1] not in funcs:
 			funcs[l[1]] = []
@@ -418,7 +451,7 @@ def cmpl(l):
 		quit('SyntaxError: Unknown statement: Lexer dump {' + str(l) + '}')
 
 def cmpf(f):
-	global funcs
+	global funcs, upper
 	try:
 		with open(f, 'r') as file:
 			for l in file:
@@ -433,6 +466,8 @@ def cmpf(f):
 		with open(path + '/utils/baseFuncs.py', 'r') as fno:
 			for l in fno:
 				file.write(l)
+		for l in upper:
+			file.write(l)
 		for func in funcs:
 			file.write('\n\ndef ' + func + '():')
 			for l in funcs[func]:

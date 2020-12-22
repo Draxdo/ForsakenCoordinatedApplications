@@ -2,12 +2,32 @@ import sys
 import math
 import os
 import threading
+import pygame
 
 balance = 0
 
 constants = {
 	
 }
+
+class char:
+	def __init__(self, v):
+		if len(v) == 0:
+			self.v = [v]
+		else:
+			self.v = [v[0]]
+	def __add__(self, other):
+		x = []
+		for i in self.v:
+			x.append(i)
+		for i in other.v:
+			x.apend(i)
+		return x
+	def __repr__(self):
+		string = ""
+		for i in self.v:
+			string += i
+		return string
 
 def restore_ptr():
 	global pointer
@@ -143,4 +163,45 @@ def add_to():
 		n[x] = s
 	elif isinstance(n, list):
 		n.append(x)
-	push(n)
+	push(n) 
+
+def put():
+	try:
+		x = pop()
+		x = x[0]
+		push(x)
+		push("stdout")
+		write()
+		push(0)
+	except:
+		print("Exception ignored: RUNTIMEERROR: STACK PTR BASED OVERFLOWERR")
+		push(1)
+
+def puts():
+	try:
+		x = pop()
+		for i in x:
+			put(i)
+		newline()
+		push(0)
+	except:
+		push(1)
+
+def cin():
+	try:
+		push(1)
+		stdin()
+		x = ""
+		pop(x)
+		push(ord(x))
+	except:
+		print("Exception ignored: RUNTIMEERROR: STDIN ERR")
+		push(1)
+
+def itoa():
+	x = pop()
+	push(chr(x))
+
+def atoi():
+	x = pop()
+	push(ord(x))
