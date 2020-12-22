@@ -2,7 +2,6 @@ import sys
 import math
 import os
 import threading
-import pygame
 
 balance = 0
 
