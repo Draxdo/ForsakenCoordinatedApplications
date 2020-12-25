@@ -92,7 +92,7 @@ dubs = []
 consts = {}
 threads = []
 upper = []
-funcargs = []
+funcargs = {}
 
 
 
