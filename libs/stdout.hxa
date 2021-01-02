@@ -9,7 +9,7 @@ intf  printf  {  (s)
 	call  write  ()
 }
 
-intf  printl  {  ()
-	call  printf  ()
+intf  printl  {  (l)
+	call  printf  (l)
 	call  endl  ()
 }
