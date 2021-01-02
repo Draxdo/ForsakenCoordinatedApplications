@@ -6,7 +6,7 @@ Pronounced ɛks-ah
 Hexa programs are structured very similar to that of C or C++. Having a main function with curly braces around the code contained inside of it.
 
 ```
-intf  main  {
+intf  main  {  ()
 	<code>
 }
 ```
@@ -20,7 +20,7 @@ Writing to the screen without a library is a major pain. That's why Hexa stdlib 
 ```
 using  stdout.hxa
 
-intf  main  {
+intf  main  {  ()
 	push  "Hello, World!"
 	call  printl
 }
@@ -29,7 +29,7 @@ intf  main  {
 ### Hard way
 
 ```
-intf  main  {
+intf  main  {  ()
 	push  "Hello, World!"
 	push  "stdout"
 	call  write

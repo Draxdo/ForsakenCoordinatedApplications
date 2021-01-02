@@ -1,9 +1,9 @@
-intf  write  {
+intf  write  {  ()
 	push  "w"
-	call  fout
+	call  fout  ()
 }
 
-intf  append  {
+intf  append  {  ()
 	push  "a"
-	call  fout
+	call  fout  ()
 }

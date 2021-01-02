@@ -1,4 +1,4 @@
-intf  err  {
+intf  err  {  ()
 	str  type  ""
 	str  info  ""
 	str  whole  ""
@@ -6,13 +6,13 @@ intf  err  {
 	pop  type
 	push  " | "
 	push  type
-	call  add
+	call  add  ()
 	pop  type
 	push  info
 	push  type
-	call  add
+	call  add  ()
 	pop  whole
 	push  whole
 	push  "stderr"
-	call  write
+	call  write  ()
 }

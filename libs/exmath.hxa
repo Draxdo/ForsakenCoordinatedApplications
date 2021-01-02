@@ -1,31 +1,31 @@
-intf  power  {
+intf  power  {  ()
 	int  x  0
 	int  y  0
 	pop  x
 	pop  y
 	push  1
 	push  y
-	call  sub
+	call  sub  ()
 	pop  y
 	int  z  x
 	while  y  >=  1  {
 		push  x
 		push  z
-	  call  mul
+	  call  mul  ()
 		push  1
 		push  y
-		call  sub
+		call  sub  ()
 		pop  y
 	}
 	return  z
 }
 
-intf  square  {
+intf  square  {  ()
 	int  n  0
 	pop  n
 	push  2
 	push  n
-	call  power
+	call  power  ()
 	pop  n
 	return  n
 }
@@ -35,7 +35,7 @@ intf  cube  {
 	pop  n
 	push  3
 	push  n
-	call  power
+	call  power  ()
 	pop  n
 	return  n
 }

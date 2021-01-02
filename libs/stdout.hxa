@@ -1,15 +1,15 @@
 intf  endl  {  ()
-	call  flush
-	call  newline
+	call  flush  ()
+	call  newline  ()
 }
 
 intf  printf  {  (s)
 	push  s
 	push  "stdout"
-	call  write
+	call  write  ()
 }
 
 intf  printl  {  ()
-	call  printf
-	call  endl
+	call  printf  ()
+	call  endl  ()
 }
